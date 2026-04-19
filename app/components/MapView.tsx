@@ -140,8 +140,9 @@ export default function MapView({
       markerEl?.classList.remove("highlighted");
     });
 
-    if (selectedSuspectIds.length === 0) return;
-
+    // Apply tower highlights regardless of whether suspects are selected.
+    // This ensures a tower-only selection (selectedSuspectIds=[], highlightTowerIds=[id])
+    // still receives the visual highlight styling.
     highlightTowerIds.forEach((towerId) => {
       const fillId = `tower-radius-fill-${towerId}`;
       const lineId = `tower-radius-line-${towerId}`;
@@ -158,6 +159,8 @@ export default function MapView({
       );
       markerEl?.classList.add("highlighted");
     });
+
+    if (selectedSuspectIds.length === 0) return;
 
     selectedSuspectIds.forEach((suspectId, idx) => {
       const suspect = suspects.find((s) => s.id === suspectId);
